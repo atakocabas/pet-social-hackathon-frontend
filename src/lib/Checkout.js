@@ -19,6 +19,9 @@ import Navbar from '../components/Navbar';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import NewNavBar from "../components/NewNavBar";
+import{ init } from 'emailjs-com';
+import {toast, ToastContainer} from "react-toastify";
+import * as emailjs from "emailjs-com";
 
 function Copyright() {
   return (
@@ -51,17 +54,21 @@ function getStepContent(step, amount, email, setEmail) {
 const theme = createTheme();
 
 export default function Checkout() {
-
+    init("user_E5buLQUtnn6ZWP4Onlwsl");
   console.log("Route params")
   const location = useLocation()
-  let amount = location.state.amount
+  let [amount, setAmount] = React.useState(location.state.amount)
+    console.log(amount)
   let [email, setEmail] = React.useState("")
 
   const [activeStep, setActiveStep] = React.useState(0);
 
   function submitOrder(){
-    axios.post("")
-  }
+    axios.post("http://localhost:8000/askidaSigorta/", {amount: amount})
+        .then((res) => {
+          toast("İşlem başarılı!")
+            emailjs.send("service_jmrmczz", "template_4zc2a3s");
+  })}
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -75,6 +82,7 @@ export default function Checkout() {
         <CssBaseline />
         <NewNavBar/>
         <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+            <ToastContainer/>
           <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
             <Typography component="h1" variant="h4" align="center">
               Checkout
