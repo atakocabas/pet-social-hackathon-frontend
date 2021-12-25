@@ -16,9 +16,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { makeGetRequest } from '../util';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
 const style = {
   position: 'absolute',
@@ -32,13 +29,7 @@ const style = {
   p: 4,
 };
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+
 
 export default function ClaimsTable() {
   const [claims, setClaims] = useState([]);
@@ -50,7 +41,7 @@ export default function ClaimsTable() {
     console.log(e.target) 
     setOpen(true)
   };
-  
+
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
