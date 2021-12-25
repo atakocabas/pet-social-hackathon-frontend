@@ -11,6 +11,8 @@ import Paper from '@mui/material/Paper';
 import { Card, Button, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { makeGetRequest } from '../util';
 
@@ -68,9 +70,19 @@ export default function ClaimsTable() {
   return (
     <div>
     <Card style={{width: "75%", margin: 100, height: "100%"}} variant="outlined">
-       <Typography gutterBottom variant="h5" component="div">
+       <Typography style={{float: "left"}} gutterBottom variant="h5" component="div">
           Taleplerim 
         </Typography>
+        <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+     <Button style={{float: "right"}}>Add Claim</Button>
+     </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -120,6 +132,7 @@ export default function ClaimsTable() {
           </Typography>
         </Box>
       </Modal>
+      <ToastContainer/>
     </div>
   );
 }

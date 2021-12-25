@@ -1,23 +1,10 @@
 import * as React from "react"
-import {
-  Box,
-  Text,
-  Heading,
-  VStack,
-  FormControl,
-  Input,
-  Select,
-  Link,
-  Button,
-  HStack,
-  Center,
-  NativeBaseProvider,
-} from "native-base"
 import { owner, veterinary } from "../constants"
 import { makeGetRequest } from "../util";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./Navbar";
+import { Card, Button, Box } from '@mui/material';
 import ClaimsTable from "./ClaimsTable";
 
 export const ClaimsPage = () => {
