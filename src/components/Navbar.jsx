@@ -15,20 +15,23 @@ const Navbar = () => {
         <Bars />
   
         <NavMenu>
-          <NavLink to='/about' activeStyle>
-            About
+          <NavLink to='/offers' activeStyle>
+            Teklifler
           </NavLink>
-          <NavLink to='/events' activeStyle>
-            Events
+          <NavLink to='/policies' activeStyle>
+            Sigorta Politikalım
           </NavLink>
-          <NavLink to='/annual' activeStyle>
-            Annual Report
+          <NavLink to='/add-pet' activeStyle>
+            Evcil Hayvan Ekle
           </NavLink>
-          <NavLink to='/team' activeStyle>
-            Teams
+          <NavLink to='/askida-sigorta' activeStyle>
+            Askıda Sigorta
           </NavLink>
-          <NavLink to='/blogs' activeStyle>
-            Blogs
+          <NavLink to='/veterinaries' activeStyle>
+            Veterinerler
+          </NavLink>
+          <NavLink to='/red-alert-corner' activeStyle>
+            Kırmızı Alarm Köşesi
           </NavLink>
           <NavLink to='/sign-up' activeStyle>
             Sign Up

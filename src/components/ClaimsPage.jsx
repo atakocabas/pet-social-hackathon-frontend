@@ -52,6 +52,7 @@ export const ClaimsPage = () => {
   return (
    <div>
      <Navbar></Navbar>
+     <ClaimsTable></ClaimsTable>
    </div>
   )
 }
