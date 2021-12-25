@@ -87,9 +87,9 @@ export default function ClaimsTable() {
         // FIXME: Change me back to data
         console.log("DATAAA")
         console.log(data)
-      /*   data.map((claim) => changeToTable(claim))
+         data.map((claim) => changeToTable(claim))
         setIsLoaded([true])
-        setClaims(data) */
+        setClaims(data) 
         console.log("Claims99999999999999999999")
         console.log(claims)
       })
