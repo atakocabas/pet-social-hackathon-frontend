@@ -14,8 +14,8 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import Navbar from './Navbar';
 import { Route, Navigate, useNavigate } from 'react-router-dom';
+import NewNavBar from "./NewNavBar";
 
 function Copyright(props) {
   return (
@@ -88,7 +88,7 @@ function PricingContent() {
     const navigate = useNavigate();
   return (
     <React.Fragment>
-        <Navbar></Navbar>
+        <NewNavBar/>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
 

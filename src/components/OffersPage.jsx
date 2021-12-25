@@ -11,9 +11,9 @@ import { owner, veterinary } from "../constants"
 import { makeGetRequest } from "../util";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from "./Navbar";
 import ClaimsTable from "./ClaimsTable";
 import ReactDOM from 'react-dom';
+import NewNavBar from "./NewNavBar";
 
 const style = {
   position: 'absolute',
@@ -78,7 +78,7 @@ export const OffersPage = () => {
 
   return (
    <div>
-     <Navbar></Navbar>
+     <NewNavBar/>
      <h1 style={{textAlign: "center"}}>Hayvan dostunuzun türünü seçin:</h1>
      <Card value="dog" style={{float: "left", padding: 50}} sx={{ maxWidth: 345 }}>
       <CardActionArea onClick={handleOpen}>

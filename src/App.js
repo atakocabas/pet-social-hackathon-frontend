@@ -9,7 +9,6 @@ import Checkout from './lib/Checkout';
 import AddPet from './components/addPet';
 import RedAlarmWalkers from './components/redAlarmWalkers';
 import RedAlarmHotels from './components/redAlarmWalkers';
-
 function App() {
 /*   const history = useHistory(); */
 
