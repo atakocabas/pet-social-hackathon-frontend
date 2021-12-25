@@ -1,0 +1,31 @@
+html {
+    font-family: 'Poppins', sans-serif !important;
+}
+body {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.form-control {
+    font-family: 'Poppins', sans-serif !important;
+    border: none;
+    outline: none;
+    background: none;
+   
+    border-bottom: 1px solid rgb(141, 141, 141);
+    margin-bottom: 1rem;
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+
+}
+
+.form-span {
+    font-size: 14px;
+    color: #747171;
+    text-transform: capitalize;
+    font-weight: 600;
+    text-align: center;
+}
