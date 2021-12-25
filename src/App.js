@@ -9,6 +9,7 @@ import Checkout from './lib/Checkout';
 import AddPet from './components/addPet';
 import RedAlarmWalkers from './components/redAlarmWalkers';
 import RedAlarmHotels from './components/redAlarmWalkers';
+import AskidaSigortaReports from "./components/AskidaSigortaReports";
 function App() {
 /*   const history = useHistory(); */
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/offers" element={<OffersPage/>} />
           <Route path="/askida-sigorta" element={<AskidaSigorta/>} />
           <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/askida-sigorta-reports" element={<AskidaSigortaReports/>} />
         </Routes>
       </Router>
    

@@ -12,8 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-const pages = ['Teklifler', 'Sigorta Politikalarim', 'Evcil Hayvan Ekle', 'Askıda Sigorta', "Veterinerler"];
-const links = ['offers', 'policies', 'add-pet', 'askida-sigorta', 'veterinaries']
+const pages = ['Teklifler', 'Sigorta Politikalarim', 'Evcil Hayvan Ekle', 'Askıda Sigorta Satın Alma', "Veterinerler", "Askıda Sigorta Raporları"];
+const links = ['offers', 'policies', 'add-pet', 'askida-sigorta', 'veterinaries', "askida-sigorta-reports"]
 const settings = ['Profile'];
 
 const ResponsiveAppBar = ({userName, logout}) => {
