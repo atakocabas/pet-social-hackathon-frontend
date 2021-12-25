@@ -41,41 +41,15 @@ const rows = [
 export default function ClaimsTable() {
   const [claims, setClaims] = useState([]);
   const [tableRowsArray, setTableRowsArray] = useState([]);
-  const [isLoaded, setIsLoaded] = useState([false])
+  const [isLoaded, setIsLoaded] = useState(false)
   const [open, setOpen] = React.useState(false);
+  const [data, setData] = useState([]);
   const handleOpen = (e) => {
     console.log(e.target) 
     setOpen(true)
-  }  ;
+  };
+  
   const handleClose = () => setOpen(false);
-
-  async function changeToTable(res){
-    let currentContent = tableRowsArray
-    console.log("Claims")
-    console.log(claims)
-    console.log(res)
-    let url = res.pet
-    console.log("url ", url)
-    let petInfo = await makeGetRequest(url)
-    console.log("pet info")
-    console.log(petInfo)
-    currentContent.push(
-      <TableRow
-      key={res.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {res.name}
-                </TableCell>
-                <TableCell align="right">{petInfo.data.name}</TableCell>
-                <TableCell align="right">2021-12-25</TableCell>
-                <TableCell align="right">{res.status}</TableCell>
-                <TableCell align="right"> <Button onClick={(e) => handleOpen(e)} description={res.description}>Detay</Button> </TableCell>
-              </TableRow>
-    )
-    setTableRowsArray(currentContent)
-    
-  }
 
   useEffect(() => {
     const res= axios.get("/claims/get_claims_of_user/?id=1")
@@ -84,16 +58,12 @@ export default function ClaimsTable() {
         return resp.data
       })
       .then((data) => {
-        // FIXME: Change me back to data
-        console.log("DATAAA")
-        console.log(data)
-         data.map((claim) => changeToTable(claim))
-        setIsLoaded([true])
-        setClaims(data) 
-        console.log("Claims99999999999999999999")
-        console.log(claims)
+        setIsLoaded(true)
+        setData(data)
+        console.log(data, "123213")
       })
-  },[])
+  }, [])
+
 
   return (
     <div>
@@ -113,8 +83,24 @@ export default function ClaimsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
+            {isLoaded === true ? data.map((data) => 
+             <TableRow
+             key={data.id}
+                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                     >
+                       <TableCell component="th" scope="row">
+                         {data.description}
+                       </TableCell>
+                       <TableCell align="right">{data.pet_name}</TableCell>
+                       <TableCell align="right">2021-12-25</TableCell>
+                       <TableCell align="right">{data.status}</TableCell>
+                       <TableCell align="right"> <Button onClick={(e) => handleOpen(e)} description={data.description}>Detay</Button> </TableCell>
+                     </TableRow>
+            ) : <></>}
+                    
+            
         
-          {tableRowsArray}
+  
           </TableBody>
         </Table>
       </TableContainer>
