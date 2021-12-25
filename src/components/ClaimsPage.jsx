@@ -7,11 +7,23 @@ import Navbar from "./Navbar";
 import { Card, Button, Box } from '@mui/material';
 import ClaimsTable from "./ClaimsTable";
 import NewNavBar from "./NewNavBar";
+import {Field, Form, Formik} from "formik";
+import Modal from "@mui/material/Modal";
+import {useState} from "react";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export const ClaimsPage = () => {
-  let [username, setUsername] = React.useState("initial");
-  let [password, setPassword] = React.useState("initial");
-  let [userType, setUserType] = React.useState("initial");
 
   function handleChange(e, func){
     func(e.target.value);
@@ -21,26 +33,12 @@ export const ClaimsPage = () => {
     func(e);
   }
 
-
-  async function signIn(){
-    let res;
-    console.log(userType)
-    if(userType.toLowerCase() === owner.toLowerCase())
-      res = await makeGetRequest("/users/get_user_by_credentials/?user=" + username + "&password=" + password);
-    else
-      res = await makeGetRequest("/vets/get_user_by_credentials/?user=" + username + "&password=" + password);
-    let user = res.data
-    if(user.length == 0)
-        toast("Invalid credentials")
-    else
-      toast("Successfull login")
-    console.log(username + " " + password)
-  }
-
   return (
    <div>
      <NewNavBar/>
+
      <ClaimsTable></ClaimsTable>
+
    </div>
   )
 }

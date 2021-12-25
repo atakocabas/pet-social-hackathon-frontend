@@ -100,7 +100,7 @@ export default function AskidaSigortaReports() {
                                     <TableCell align="right">{data.amount}</TableCell>
                                     <TableCell align="right">{data.vet_name}</TableCell>
                                     <TableCell align="right">{data.isUsed ? 'Kullanıldı' : 'Beklemede'}</TableCell>
-                                    <TableCell align="right"><a href={"http://localhost:8000/" + data.files}>Görmek için tıklayın.</a></TableCell>
+                                    <TableCell align="right"><a href={"http://localhost:8000/" + data.files}>{data.isUsed !== "false" ? 'Görmek için tıklayın.' : ''}</a></TableCell>
                                 </TableRow>
                             ) : <></>}
 

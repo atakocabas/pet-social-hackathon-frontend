@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 const pages = ['Teklifler', 'Sigorta Politikalarim', 'Evcil Hayvan Ekle', 'Askıda Sigorta Satın Alma', "Veterinerler", "Askıda Sigorta Raporları"];
 const links = ['offers', 'policies', 'add-pet', 'askida-sigorta', 'veterinaries', "askida-sigorta-reports"]
@@ -19,7 +20,7 @@ const settings = ['Profile'];
 const ResponsiveAppBar = ({userName, logout}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -64,7 +65,7 @@ const ResponsiveAppBar = ({userName, logout}) => {
             style={{padding: "1rem"}}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-              <img src="https://customerssizeandme.s3.eu-central-1.amazonaws.com/anadolulogo.svg" width="150px" alt="anadoluSigortaLogo" />
+              <img src="https://customerssizeandme.s3.eu-central-1.amazonaws.com/anadolulogo.svg" width="150px" alt="anadoluSigortaLogo" onClick={() => navigate("/dashboard")} />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

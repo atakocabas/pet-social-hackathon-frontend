@@ -15,6 +15,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { makeGetRequest } from '../util';
+import {Field, Form, Formik} from "formik";
+import {Dropdown} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 
 const style = {
@@ -37,10 +40,28 @@ export default function ClaimsTable() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [open, setOpen] = React.useState(false);
   const [data, setData] = useState([]);
+  axios.get("/pets/get_pets_of_user/?id=1")
+      .then()
   const handleOpen = (e) => {
     console.log(e.target) 
     setOpen(true)
   };
+  const handleOpenSecond = (e) => {
+    setOpenSecond(true)
+  }
+  const navigate = useNavigate();
+  const[petsOfUser, setPetsOfUser] = useState([]);
+  const [openSecond, setOpenSecond] = useState(false);
+  const [description, setDescription] = useState(' ');
+  const [openThird, setOpenThird] = useState(false);
+
+  const handleCloseSecond = () => setOpenSecond(false);
+  const handleCloseThird = () => setOpenThird(false);
+
+  function addClaim(){
+
+  }
+
 
   const handleClose = () => setOpen(false);
 
@@ -64,6 +85,7 @@ export default function ClaimsTable() {
        <Typography style={{float: "left"}} gutterBottom variant="h5" component="div">
           Taleplerim 
         </Typography>
+      <Button onClick={handleOpen} style={{float: "right"}}>Add Claim</Button>
         <Box
       component="form"
       sx={{
@@ -72,7 +94,6 @@ export default function ClaimsTable() {
       noValidate
       autoComplete="off"
     >
-     <Button style={{float: "right"}}>Add Claim</Button>
      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -97,7 +118,7 @@ export default function ClaimsTable() {
                        <TableCell align="right">{data.pet_name}</TableCell>
                        <TableCell align="right">2021-12-25</TableCell>
                        <TableCell align="right">{data.status}</TableCell>
-                       <TableCell align="right"> <Button onClick={(e) => handleOpen(e)} description={data.description}>Detay</Button> </TableCell>
+                       <TableCell align="right"> <a href={data.file ? "http://localhost:8000/" + data.file : ""}>{data.file ? "Detay" : "-"}</a> </TableCell>
                      </TableRow>
             ) : <></>}
                     
@@ -108,11 +129,54 @@ export default function ClaimsTable() {
         </Table>
       </TableContainer>
     </Card>
-    <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+      <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, width: 300 }}>
+          <Formik  initialValues={{
+            pet: "",
+            description:"",
+            file: null,
+          }} onSubmit={(values) => addClaim(values)}>
+            <Form>
+              <h2 id="child-modal-title">Talep Aç</h2>
+              <span className="form-span">Hangi hayvanınız için bu operasyonu yapmak istiyorsunuz?</span>
+              <Dropdown
+                  className="form-control"
+                  type="number"
+                  name="pet"
+                  autoComplete="current-text"
+              />
+              <span className="form-span">Talebinizi kısaca açıklar mısınız?</span>
+              <Field
+                  className="form-control"
+                  type="text"
+                  name="description"
+                  autoComplete="current-text"
+              />
+              <span className="form-span">Yetkili kurumdan alınmış faturalarınızı aşağıdan yükleyebilirsiniz.</span>
+              <Field
+                  className="form-control"
+                  type="text"
+                  name="file"
+                  autoComplete="current-text"
+              />
+              <div>
+                <Button  type="submit" variant="contained"   color="success">Kaydet</Button>
+                <Button  variant="contained"  onClick={handleClose} style={{marginLeft: "2rem"}}>Kapat</Button>
+              </div>
+            </Form>
+          </Formik>
+        </Box>
+      </Modal>
+      <Modal
+          open={openSecond}
+          onClose={handleCloseSecond}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
