@@ -1,24 +1,44 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Paper from "@mui/material/Paper";
-import { Card, Button, Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Button, Box } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import { DataGrid } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
 import ResponsiveAppBar from './NewNavBar';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import { Formik, Form, Field } from 'formik';
 import './customCss.css'
+import { styled } from '@mui/material/styles';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
 import Footer from './footer';
+
+const mockData = [{"avatar":"http://dummyimage.com/143x100.png/ff4444/ffffff","first_name":"Jennie","last_name":"Strutt","rate":1,"big_image":"http://dummyimage.com/112x100.png/5fa2dd/ffffff","background":"Extirpation of Matter from Right Vocal Cord, Perc Approach","date":"5/20/2021"},
+{"avatar":"http://dummyimage.com/134x100.png/5fa2dd/ffffff","first_name":"Janeta","last_name":"Goforth","rate":2,"big_image":"http://dummyimage.com/230x100.png/cc0000/ffffff","background":"Inspection of Right Metatarsal-Tarsal Joint, Perc Approach","date":"12/14/2021"},
+{"avatar":"http://dummyimage.com/248x100.png/dddddd/000000","first_name":"Anastasie","last_name":"Kahn","rate":3,"big_image":"http://dummyimage.com/205x100.png/dddddd/000000","background":"Excision of Cerebellum, Open Approach, Diagnostic","date":"2/25/2021"},
+{"avatar":"http://dummyimage.com/250x100.png/cc0000/ffffff","first_name":"Derrek","last_name":"Bullant","rate":4,"big_image":"http://dummyimage.com/195x100.png/cc0000/ffffff","background":"Fusion Lumsac Jt w Intbd Fus Dev, Post Appr A Col, Open","date":"12/5/2021"},
+{"avatar":"http://dummyimage.com/188x100.png/cc0000/ffffff","first_name":"Marc","last_name":"Ledstone","rate":5,"big_image":"http://dummyimage.com/226x100.png/cc0000/ffffff","background":"Drainage of Sigmoid Colon with Drainage Device, Endo","date":"5/13/2021"},
+{"avatar":"http://dummyimage.com/160x100.png/ff4444/ffffff","first_name":"Adela","last_name":"Fanshawe","rate":6,"big_image":"http://dummyimage.com/104x100.png/5fa2dd/ffffff","background":"Dilate R Ext Iliac Art, Bifurc, w 4 Drug-elut, Perc","date":"7/13/2021"},
+{"avatar":"http://dummyimage.com/235x100.png/ff4444/ffffff","first_name":"Lizzy","last_name":"Hirsthouse","rate":7,"big_image":"http://dummyimage.com/249x100.png/cc0000/ffffff","background":"CT Scan Port/Splanch Vein w Oth Contrast, Unenh, Enhance","date":"5/4/2021"},
+{"avatar":"http://dummyimage.com/128x100.png/5fa2dd/ffffff","first_name":"Ives","last_name":"Feronet","rate":8,"big_image":"http://dummyimage.com/207x100.png/5fa2dd/ffffff","background":"Insert Infusion Dev in Epididymis/Sperm Cord, Via Opening","date":"2/14/2021"},
+{"avatar":"http://dummyimage.com/101x100.png/ff4444/ffffff","first_name":"Imelda","last_name":"Haibel","rate":9,"big_image":"http://dummyimage.com/128x100.png/ff4444/ffffff","background":"Removal of Extraluminal Device from Heart, Open Approach","date":"4/5/2021"},
+{"avatar":"http://dummyimage.com/179x100.png/5fa2dd/ffffff","first_name":"Caressa","last_name":"Gallgher","rate":10,"big_image":"http://dummyimage.com/244x100.png/5fa2dd/ffffff","background":"Occlusion of Gastric Vein with Intralum Dev, Open Approach","date":"5/29/2021"}]
 const style = {
   position: 'absolute',
   top: '50%',
@@ -34,15 +54,31 @@ const style = {
 };
 
 
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+  })(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  }));
+const fakeInfo  = ['']
 
-const tableHead  = ['Isim', 'Yaş', 'Tip', 'Cins',  'Kronik Hastalık', "Aşı Durumu", 'Sigorta Durumu' ," ", " "]
-export default function ClaimsTable({user}) {
+
+export default function RedAlarm({user}) {
     const [isLoaded, setLoaded] = useState(false);
     const [data, setData] = useState([]);
     const [open, setOpen] = useState(false);
     const [openSecond, setOpenSecond] = useState(false);
     const [openThird, setOpenThird] = useState(false);
     const [currentData, setCurrentData] = useState(false)
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
 
     const [notFound, setNotFound] = useState(false);
     const handleClose = () => setOpen(false);
@@ -89,7 +125,7 @@ export default function ClaimsTable({user}) {
     const deletePet = async (petId) => {
         
         try {
-            const deletePet = await axios.delete(`/pets/${petId}`);
+            const deletePet = await axios.delete("/pets/");
             setData((data) => data.filter((data) => data.id !== petId))
 
         } catch (err) {
@@ -110,60 +146,64 @@ export default function ClaimsTable({user}) {
         
       <ResponsiveAppBar user={user}/>
       <Container maxWidth="m">
-    <div style={{  width: '100%' }}>
-    <div style={{ height: 75, width: '100%', display: "flex", alignItems: "center", justifyContent: "end" }}>
-        <Button variant="contained" style={{textTransform: "capitalize"}} onClick={() => setOpen(true)}>Evcil Hayvanımı Ekle</Button>
-    </div>
-        
+
     <div style={{ display: 'flex', height: '100%' }}>
-        
-      <div style={{ flexGrow: 1, marginTop: "1rem", marginBottom: "3rem" }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-                {tableHead.map((name) =>   <TableCell align="left">{name}</TableCell>)}
-         
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoaded === true ? data.map((data) => 
-             <TableRow
-             key={data.id}
-                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                     >
-                       <TableCell component="th" scope="row">
-                         {data.name}
-                       </TableCell>
-                       <TableCell align="left">{data.age}</TableCell>
-                       <TableCell align="left">{data.type}</TableCell>
-                       <TableCell align="left">{data.breed}</TableCell>
-                       <TableCell align="left">{data.chronicalIllnesses}</TableCell>
-                       <TableCell align="left">{data.vaccineStatus}</TableCell>
-                       <TableCell align="left">{data.insurance}</TableCell>
-                       <TableCell align="left"><Button variant="contained" style={{textTransform: "capitalize"}} onClick={() => {
-                           setCurrentData(data)
-                           setOpenThird(true)
-                       }}>Değiştir</Button></TableCell>
-                       <TableCell align="left"><Button variant="contained" style={{textTransform: "capitalize"}} onClick={() => {
-                           setCurrentData(data.id)
-                           setOpenSecond(true)
-                       }}>Sil</Button></TableCell>
-                
-                     </TableRow>
-            ) : <></>}
-            {notFound === false ? "" : <h3 style={{textAlign: "center"}}>Kayıtlı evcil hayvanınız bulanamadı.</h3>}
-                    
+      <div style={{ flexGrow: 1, marginTop: "1rem", marginBottom: "3rem", marginLeft: "2.5rem", gridTemplateColumns: "repeat(4, 1fr)", display: "grid", gridRowGap: "2rem", justifyContent: "center" }}>
+      {mockData.map((data) => <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             
-        
-  
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title={data.first_name + " " + data.last_name}
+        subheader={data.date}
+      />
+      <CardMedia
+        component="img"
+        height="300"
+        image={data.big_image}
+        alt="Paella dish"
+      />
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+         {data.background}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+        <StarIcon />
+        </IconButton>
+        <IconButton aria-label="add to favorites">
+          <StarIcon />
+        </IconButton>
+        <IconButton aria-label="add to favorites">
+          <StarIcon />
+        </IconButton>
+        <IconButton aria-label="add to favorites">
+            <StarHalfIcon />
+        </IconButton>
+        <IconButton aria-label="add to favorites">
+          <StarBorderIcon />
+        </IconButton>
+       
+        <ExpandMore
+          aria-label="show more"
+        >
+          <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+        </ExpandMore>
+      </CardActions>
+    </Card>)}
       <div style={{height: "100px"}}></div>
       </div>
-    </div>
-    </div>
+     </div>
     <Modal
         open={open}
         onClose={handleClose}
@@ -363,11 +403,10 @@ export default function ClaimsTable({user}) {
           </div>
         </Box>
       </Modal>
-  
+   
     </Container>
+  
     <Footer />
-  
-  
   </div>
     );
 }
