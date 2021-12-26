@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import { Select, MenuItem } from "@mui/material";
+import {Select, MenuItem, Input} from "@mui/material";
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
@@ -42,7 +42,20 @@ export default function ClaimsTable() {
   const [isLoaded2, setIsLoaded2] = useState(false)
   const [open, setOpen] = React.useState(false);
   const [data, setData] = useState([]);
+  const [filePath, setFilePath] = useState('');
+  const [animalID, setAnimalID] = useState(-1)
+  const [descr, setDescr] = useState('')
 
+  const handleSubmit = () => {
+
+  }
+  const handleFileChange = (e, func) =>{
+    func(e.target.files)
+  }
+
+  const handleChange = (e, func) => {
+    func(e.target.value)
+  }
   const handleOpen = (e) => {
     console.log(e.target) 
     setOpen(true)
@@ -53,14 +66,15 @@ export default function ClaimsTable() {
   const navigate = useNavigate();
   const[petsOfUser, setPetsOfUser] = useState([]);
   const [openSecond, setOpenSecond] = useState(false);
-  const [description, setDescription] = useState(' ');
+  const [description, setDescription] = useState("deneme");
   const [openThird, setOpenThird] = useState(false);
 
   const handleCloseSecond = () => setOpenSecond(false);
   const handleCloseThird = () => setOpenThird(false);
 
-  function addClaim(){
-
+  function addClaim(values){
+    console.log("values")
+    console.log(values)
   }
   const getPets = async () => {
     const getPet = await axios.get(`/pets/get_pets_of_user/?id=1`)
@@ -158,6 +172,7 @@ export default function ClaimsTable() {
               <span className="form-span">Hangi hayvanınız için bu operasyonu yapmak istiyorsunuz?
                    </span>
               <Select
+                  onChange={(e) => handleChange(e, setAnimalID)}
                   className="form-control"
                   type="number"
                   name="pet"
@@ -170,18 +185,14 @@ export default function ClaimsTable() {
                   </Select>
               <span className="form-span">Talebinizi kısaca açıklar mısınız?</span>
               <Field
+                  onChange={(e) => handleChange(e, setDescription)}
                   className="form-control"
                   type="text"
                   name="description"
                   autoComplete="current-text"
               />
               <span className="form-span">Yetkili kurumdan alınmış faturalarınızı aşağıdan yükleyebilirsiniz.</span>
-              <Field
-                  className="form-control"
-                  type="text"
-                  name="file"
-                  autoComplete="current-text"
-              />
+              <Input type="file" onChange={(e) => handleFileChange(e, setFilePath)}/>
               <div>
                 <Button  type="submit" variant="contained"   color="success">Kaydet</Button>
                 <Button  variant="contained"  onClick={handleClose} style={{marginLeft: "2rem"}}>Kapat</Button>
