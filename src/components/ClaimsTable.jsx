@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import { Select, MenuItem } from "@mui/material";
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
@@ -38,10 +39,10 @@ export default function ClaimsTable() {
   const [claims, setClaims] = useState([]);
   const [tableRowsArray, setTableRowsArray] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded2, setIsLoaded2] = useState(false)
   const [open, setOpen] = React.useState(false);
   const [data, setData] = useState([]);
-  axios.get("/pets/get_pets_of_user/?id=1")
-      .then()
+
   const handleOpen = (e) => {
     console.log(e.target) 
     setOpen(true)
@@ -76,7 +77,20 @@ export default function ClaimsTable() {
         setData(data)
         console.log(data, "123213")
       })
+
+    axios.get("/pets/get_pets_of_user/?id=1")
+        .then((res) => {
+          return res.data
+        })
+        .then((data) => {
+          setIsLoaded2(true)
+          setPetsOfUser(data)
+          console.log("Pets")
+          console.log(data, "123213")
+        })
+
   }, [])
+
 
 
   return (
@@ -144,12 +158,17 @@ export default function ClaimsTable() {
             <Form>
               <h2 id="child-modal-title">Talep Aç</h2>
               <span className="form-span">Hangi hayvanınız için bu operasyonu yapmak istiyorsunuz?</span>
-              <Dropdown
+              <Select
                   className="form-control"
                   type="number"
                   name="pet"
                   autoComplete="current-text"
-              />
+              >
+                {isLoaded2 === true ? data.map((e) => {
+                  <MenuItem value={e.id}>{e.name}</MenuItem>
+                }) : <></>
+                }
+                  </Select>
               <span className="form-span">Talebinizi kısaca açıklar mısınız?</span>
               <Field
                   className="form-control"
