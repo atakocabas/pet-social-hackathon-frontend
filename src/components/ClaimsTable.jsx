@@ -62,7 +62,14 @@ export default function ClaimsTable() {
   function addClaim(){
 
   }
-
+  const getPets = async () => {
+    const getPet = await axios.get(`/pets/get_pets_of_user/?id=1`)
+    const result = getPet.data;
+    await setPetsOfUser(result)
+    setIsLoaded2(true)
+    console.log(result)
+    result.map((x) => console.log(x.name, x.id))
+  }
 
   const handleClose = () => setOpen(false);
 
@@ -78,16 +85,7 @@ export default function ClaimsTable() {
         console.log(data, "123213")
       })
 
-    axios.get("/pets/get_pets_of_user/?id=1")
-        .then((res) => {
-          return res.data
-        })
-        .then((data) => {
-          setIsLoaded2(true)
-          setPetsOfUser(data)
-          console.log("Pets")
-          console.log(data, "123213")
-        })
+    getPets()
 
   }, [])
 
@@ -97,7 +95,7 @@ export default function ClaimsTable() {
     <div>
     <Card style={{width: "75%", margin: 100, height: "100%"}} variant="outlined">
        <Typography style={{float: "left"}} gutterBottom variant="h5" component="div">
-          Taleplerim 
+          Taleplerim
         </Typography>
       <Button onClick={handleOpen} style={{float: "right"}}>Add Claim</Button>
         <Box
@@ -157,17 +155,18 @@ export default function ClaimsTable() {
           }} onSubmit={(values) => addClaim(values)}>
             <Form>
               <h2 id="child-modal-title">Talep Aç</h2>
-              <span className="form-span">Hangi hayvanınız için bu operasyonu yapmak istiyorsunuz?</span>
+              <span className="form-span">Hangi hayvanınız için bu operasyonu yapmak istiyorsunuz?
+                   </span>
               <Select
                   className="form-control"
                   type="number"
                   name="pet"
                   autoComplete="current-text"
               >
-                {isLoaded2 === true ? data.map((e) => {
-                  <MenuItem value={e.id}>{e.name}</MenuItem>
-                }) : <></>
-                }
+                 {isLoaded2 === true ? petsOfUser.map((e) =>
+                       <MenuItem value={e.id}>{e.name}</MenuItem>
+                   ) : <></>
+                   }
                   </Select>
               <span className="form-span">Talebinizi kısaca açıklar mısınız?</span>
               <Field
