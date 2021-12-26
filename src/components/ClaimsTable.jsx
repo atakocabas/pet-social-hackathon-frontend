@@ -71,10 +71,30 @@ export default function ClaimsTable() {
 
   const handleCloseSecond = () => setOpenSecond(false);
   const handleCloseThird = () => setOpenThird(false);
+  const [records, setRecords] = useState([]);
 
-  function addClaim(values){
-    console.log("values")
-    console.log(values)
+  async function addClaim(values){
+    //let fileData = fs.readSync(filePath)
+    let filename = "/files/"+ filePath.name
+    let petId = animalID
+    let petName = "Soprano"
+    let status = "Open"
+    /*await axios.post("http://localhost:8000/claims/", {pet_id: petId, status: status, description: description})
+        .then((resp) => {
+          toast("Talebiniz alındı. Görmek için sayfayı yenileyin.")
+        })
+    console.log(filePath)
+    console.log(description)
+    console.log(animalID)*/
+    let obj = {}
+    obj["id"] = 1
+    obj["description"] = description
+    obj["pet_name"] = petName
+    obj["status"] = status
+    obj["file"] = "files/WhatsApp_Image_2021-12-22_at_22.16.04.jpg"
+
+    records.push(obj)
+    setRecords(records)
   }
   const getPets = async () => {
     const getPet = await axios.get(`/pets/get_pets_of_user/?id=1`)
@@ -147,10 +167,25 @@ export default function ClaimsTable() {
                        <TableCell align="right"> <a href={data.file ? "http://localhost:8000/" + data.file : ""}>{data.file ? "Detay" : "-"}</a> </TableCell>
                      </TableRow>
             ) : <></>}
-                    
-            
-        
-  
+
+            {isLoaded === true ? records.map((data) =>
+                <TableRow
+                    key={data.id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {data.description}
+                  </TableCell>
+                  <TableCell align="right">{data.pet_name}</TableCell>
+                  <TableCell align="right">2021-12-25</TableCell>
+                  <TableCell align="right">{data.status}</TableCell>
+                  <TableCell align="right"> <a href={data.file ? "http://localhost:8000/" + data.file : ""}>{data.file ? "Detay" : "-"}</a> </TableCell>
+                </TableRow>
+            ) : <></>}
+
+
+
+
           </TableBody>
         </Table>
       </TableContainer>
@@ -184,7 +219,7 @@ export default function ClaimsTable() {
                    }
                   </Select>
               <span className="form-span">Talebinizi kısaca açıklar mısınız?</span>
-              <Field
+              <Input
                   onChange={(e) => handleChange(e, setDescription)}
                   className="form-control"
                   type="text"

@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./Navbar";
 import { Card, Button, Box } from '@mui/material';
 import VetsTable from "./VetsTable";
+import NewNavBar from "./NewNavBar";
 
 export const VetsPage = () => {
   let [username, setUsername] = React.useState("initial");
@@ -38,7 +39,7 @@ export const VetsPage = () => {
 
   return (
    <div>
-     <Navbar></Navbar>
+     <NewNavBar/>
      <VetsTable></VetsTable>
    </div>
   )

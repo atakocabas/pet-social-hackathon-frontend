@@ -10,7 +10,7 @@ import AddPet from './components/addPet';
 import RedAlarmWalkers from './components/redAlarmWalkers';
 import RedAlarmHotels from './components/redAlarmWalkers';
 import AskidaSigortaReports from "./components/AskidaSigortaReports";
-import VetsPage from "./components/VetsPage"
+import {VetsPage} from "./components/VetsPage";
 function App() {
 /*   const history = useHistory(); */
 
