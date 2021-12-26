@@ -8,8 +8,9 @@ import AskidaSigorta from './components/AskidaSigorta';
 import Checkout from './lib/Checkout';
 import AddPet from './components/addPet';
 import RedAlarmWalkers from './components/redAlarmWalkers';
-import RedAlarmHotels from './components/redAlarmWalkers';
+import RedAlarmHotels from './components/redAlarmHotels';
 import AskidaSigortaReports from "./components/AskidaSigortaReports";
+import RedAlarmHotelInside from './components/redAlarmHotelInside';
 function App() {
 /*   const history = useHistory(); */
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/add-pet" element={<AddPet  user={user}/>} />
           <Route path="/red-alert-corner-walkers" element={<RedAlarmWalkers user={user}/>} />
           <Route path="/red-alert-corner-hotels" element={<RedAlarmHotels user={user}/>} />
+          <Route path="/red-alert-corner-hotels/:id" element={<RedAlarmHotelInside user={user}/>} />
           <Route path="/dashboard" element={<ClaimsPage/>} />
           <Route path="/" element={<LoginPage/>} />
             

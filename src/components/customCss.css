@@ -207,3 +207,29 @@ body {
 	}
 
 }
+
+.hoverOpacity {
+	transition: all 2s;
+}
+.hoverOpacity:hover {
+	cursor: pointer;
+	transition: all .2s;
+	opacity: 0.85;
+
+}
+
+.item-enter {
+	opacity: 0;
+  }
+  .item-enter-active {
+	opacity: 1;
+	transition: opacity 500ms ease-in;
+  }
+  .item-exit {
+	opacity: 1;
+  }
+  .item-exit-active {
+	opacity: 0;
+	transition: opacity 500ms ease-in;
+  }
+  
